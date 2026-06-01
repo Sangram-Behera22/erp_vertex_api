@@ -1,0 +1,44 @@
+node_modules
+# Keep environment variables out of version control
+.env
+
+/src/generated/prisma
+
+# Log Output Targets
+logs
+*.log
+npm-debug.log*
+
+# Core Compilation Builds
+dist/
+build/
+.tscache/
+
+# Third-Party Dependencies
+node_modules/
+jspm_packages/
+
+# Secure Environment Profiles (CRITICAL: Never commit these!)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# OS Specific Core Metadata
+.DS_Store
+Thumbs.db
+.pnp
+.pnp.js
+
+# Code Testing Frameworks
+coverage/
+.nyc_output/
+
+# Continuous Integration Configurations
+.eslintcache
+.stylelintcache
+
+# Prisma Engine Build Cache
+/prisma/migrations-backups/
+/public

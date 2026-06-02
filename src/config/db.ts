@@ -1,10 +1,28 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "../generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import dotenv from "dotenv";
 
-// Prevent multiple dynamic instantiation leaks during nodenext hot-reloading
-const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
+dotenv.config();
 
-export const prisma = globalForPrisma.prisma || new PrismaClient({
-  log: process.env.NODE_ENV === 'development' ? ['query', 'info', 'warn', 'error'] : ['error'],
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL!,
 });
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+// Singleton (prevents multiple instances in dev)
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined;
+};
+
+export const prisma =
+  globalForPrisma.prisma ??
+  new PrismaClient({
+    adapter,
+    log:
+      process.env.NODE_ENV === "development"
+        ? ["query", "info", "warn", "error"]
+        : ["error"],
+  });
+
+if (process.env.NODE_ENV !== "production") {
+  globalForPrisma.prisma = prisma;
+}

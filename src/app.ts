@@ -5,7 +5,7 @@ dotenv.config();
 import pinoHttp from 'pino-http';
 // CRITICAL: .js extension suffix mapping is required by your nodenext compiler config!
 import { prisma } from './config/db.js';
-
+import routes from "./routes";
 
 
 const app = express();
@@ -21,6 +21,9 @@ app.use(cors({ origin: '*' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/api/v1", routes);
+
+
 // 3. Mount test route to verify database connection
 app.get('/api/health', async (req, res, next) => {
   try {
@@ -31,6 +34,7 @@ app.get('/api/health', async (req, res, next) => {
     next(error);
   }
 });
+
 
 // 4. Centralized Error-Handling Pipeline
 app.use((err: Error, req: express.Request, res: express.Response, _next: express.NextFunction): void => {

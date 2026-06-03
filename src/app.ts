@@ -1,11 +1,11 @@
-import express, { type Request, type Response, type NextFunction } from 'express';
+import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 dotenv.config();
 import pinoHttp from 'pino-http';
 // CRITICAL: .js extension suffix mapping is required by your nodenext compiler config!
 import { prisma } from './config/db.js';
-import routes from "./routes";
+import routes from "./routes/index.js";
 
 
 const app = express();

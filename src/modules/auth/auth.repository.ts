@@ -1,4 +1,4 @@
-import { prisma } from "../../config/db";
+import { prisma } from '../../config/db.js';
 
 export class AuthRepository {
   async findUserByEmail(email: string) {
@@ -7,15 +7,11 @@ export class AuthRepository {
     });
   }
 
-  async createRefreshToken(data: {
-    userId: string;
-    tokenHash: string;
-    expiresAt: Date;
-    }) {
-      return prisma.refreshToken.create({
-        data,
-      });
- }
+  async createRefreshToken(data: { userId: string; tokenHash: string; expiresAt: Date }) {
+    return prisma.refreshToken.create({
+      data,
+    });
+  }
 
   async findRefreshToken(tokenHash: string) {
     return prisma.refreshToken.findFirst({
